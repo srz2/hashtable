@@ -14,7 +14,12 @@ Hashtable::~Hashtable()
 {
   for(int c = 0; c < TABLE_SIZE; c++)
   {
-    this->table[c]->clear();
+    std::vector<const char *> *v = this->table[c];
+    for(std::vector<const char *>::iterator it = v->begin(); it != v->end(); it++)
+    {
+      delete *it;
+    }
+    delete this->table[c];
   }
   printf("Deinitialized!\n");
 }
@@ -40,13 +45,19 @@ Hashtable& Hashtable::operator =(const Hashtable & other)
 int Hashtable::hash(const char * value)
 {
   // printf("Hash of %s = %d\n", value, value[0]);
-  return value[0] % TABLE_SIZE;
+  int val = (value[0] - 'A') % TABLE_SIZE;
+  return val;
 }
 
 void Hashtable::add(const char * value)
 {
-  int index = hash(value);
-  this->table[index]->push_back(value);
+  int size = strlen(value);
+  char * temp = new char[size];
+  strcpy(temp, value);
+
+  int index = hash(temp);
+  this->table[index]->push_back(temp);
+  printf("Added %s at %d\n", temp, index);
   // printf("Index %d new size = %ld", index, this->table[index]->size());
 }
 
