@@ -77,3 +77,26 @@ bool Hashtable::contains(const char * value)
 
   return false;
 }
+
+int Hashtable::countOccupiedBuckets()
+{
+  int count = 0;
+  for(int c = 0; c < TABLE_SIZE; c++)
+  {
+    if(this->table[c]->size() > 0)
+      count++;
+  }
+  return count;
+}
+
+int Hashtable::countElements()
+{
+  int count = 0;
+  for(int c = 0; c < TABLE_SIZE; c++)
+  {
+    if(this->table[c]->size() > 0)
+      count += this->table[c]->size();
+  }
+  return count;
+}
+
