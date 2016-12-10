@@ -17,7 +17,7 @@ Hashtable::~Hashtable()
     std::vector<const char *> *v = this->table[c];
     for(std::vector<const char *>::iterator it = v->begin(); it != v->end(); it++)
     {
-      delete *it;
+      delete [] *it;
     }
     delete this->table[c];
   }
@@ -52,7 +52,7 @@ int Hashtable::hash(const char * value)
 void Hashtable::add(const char * value)
 {
   int size = strlen(value);
-  char * temp = new char[size];
+  char * temp = new char[size + 1];
   strcpy(temp, value);
 
   int index = hash(temp);
