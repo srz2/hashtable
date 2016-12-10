@@ -21,5 +21,6 @@ class Hashtable
     int countElements();
 
     void add(const char * value);
-    bool contains(const char * value);
+    bool remove(const char * value);
+    int contains(const char * value);
 };

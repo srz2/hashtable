@@ -61,21 +61,47 @@ void Hashtable::add(const char * value)
   // printf("Index %d new size = %ld", index, this->table[index]->size());
 }
 
-bool Hashtable::contains(const char * value)
+bool Hashtable::remove(const char * value)
+{
+  int vectorIndex = this->contains(value) - 1;
+  if(vectorIndex == 0)
+  {
+    return false;
+  }
+
+  int tableIndex = hash(value);
+  std::vector<const char *> * v = this->table[tableIndex];
+
+  //printf("Will delete %s at index %d\n", *(v->begin() + vectorIndex - 1), vectorIndex - 1);
+  try
+  {
+    v->erase(v->begin() + vectorIndex);
+  }
+  catch(int e )
+  {
+    printf("Deletion Error: %d", e);
+  }
+
+  return true;
+}
+
+int Hashtable::contains(const char * value)
 {
   int index = hash(value);
   std::vector<const char *> * v = this->table[index];
 
+  index = 0;
   for(std::vector<const char *>::iterator it = v->begin(); it != v->end(); it++)
   {
+    index++;
     const char *t_val = *it;
     if(strcmp(t_val, value) == 0)
     {
-      return true;
+      return index;
     }
   }
 
-  return false;
+  return 0;
 }
 
 int Hashtable::countOccupiedBuckets()

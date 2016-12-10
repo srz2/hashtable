@@ -34,6 +34,7 @@ int main()
 			}
 			case MenuOption_REMOVE:
 			{
+				hastable_remove();
 				break;
 			}
 			case MenuOption_CHECK:
@@ -56,7 +57,8 @@ int main()
 
 char splash()
 {
-	printf("           Steven's Hashtable            \n");
+	printf("-----------------------------------------\n");
+	printf("-----------Steven's Hashtable------------\n");
 	printf("-----------------------------------------\n");
 	printf("------------------Stats------------------\n");
 	printf("       %d Occupied Buckets               \n", ht.countOccupiedBuckets());
@@ -89,9 +91,21 @@ void hastable_add()
 
 void hastable_remove()
 {
-	printf("Remove not implemented yet...");
+	char name[100];
+	printf("Enter name to remove: ");
+	scanf("%s", name);
 	while(getchar() != '\n')
 		;
+
+	bool success = ht.remove(name);
+	if(success)
+	{
+		printf("Sucessfully removed %s\n", name);
+	}
+	else
+	{
+		printf("Unable to find %s\n", name);
+	}
 }
 
 void hastable_check()
